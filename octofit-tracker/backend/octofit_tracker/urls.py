@@ -25,8 +25,12 @@ router.register(r'activities', views.ActivityViewSet, basename='activity')
 router.register(r'leaderboard', views.LeaderboardViewSet, basename='leaderboard')
 router.register(r'workouts', views.WorkoutViewSet, basename='workout')
 
+from django.views.generic import RedirectView
+from django.urls import reverse_lazy
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.api_root, name='api-root'),
-    path('', include(router.urls)),
+    path('', RedirectView.as_view(url=reverse_lazy('api-root'), permanent=False)),
+    path('api/', views.api_root, name='api-root'),
+    path('api/', include(router.urls)),
 ]
